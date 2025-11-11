@@ -1,0 +1,8 @@
+.next
+node_modules
+.turbo
+out
+.DS_Store
+.swc
+npm-debug.log
+

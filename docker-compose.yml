@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: tspkthee-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-tspkthee}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - '${DB_PORT:-5432}:5432'
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tspkthee-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: tspkthee-admin
+    restart: unless-stopped
+    env_file:
+      - ./admin/.env
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:3000/api
+      PORT: 3000
+    depends_on:
+      - backend
+    ports:
+      - '3001:3000'
+
+  adminer:
+    image: adminer:4
+    container_name: tspkthee-adminer
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+
