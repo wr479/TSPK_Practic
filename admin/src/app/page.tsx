@@ -531,7 +531,7 @@ export default function AdminDashboard() {
 
   if (!authorized) {
     return (
-      <div className="auth-wrapper">
+      <div className="auth-wrapper flex" style={{ flexDirection: 'column' }}>
         <form className="card auth-card" onSubmit={handleLogin}>
           <h1>Админка</h1>
           <label className="field">
