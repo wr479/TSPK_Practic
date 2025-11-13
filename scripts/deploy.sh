@@ -33,6 +33,13 @@ fi
 echo "🛑 Остановка старых контейнеров..."
 $DOCKER_COMPOSE -f docker-compose.prod.yml down 2>/dev/null || true
 
+# Проверка наличия DB_PASSWORD в env.prod
+if grep -q "^DB_PASSWORD=$" ./backend/env.prod || ! grep -q "^DB_PASSWORD=" ./backend/env.prod; then
+    echo "⚠️  ВНИМАНИЕ: DB_PASSWORD не установлен или пустой в backend/env.prod"
+    echo "   Установите пароль для базы данных перед продолжением"
+    exit 1
+fi
+
 # Сборка и запуск контейнеров
 echo "🔨 Сборка образов..."
 $DOCKER_COMPOSE -f docker-compose.prod.yml build --no-cache
