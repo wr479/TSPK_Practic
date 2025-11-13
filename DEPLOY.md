@@ -2,11 +2,61 @@
 
 ## Требования
 
-- Docker и Docker Compose установлены на сервере
-- Доступ к серверу по IP 82.146.39.73
+- Ubuntu сервер с доступом по IP 82.146.39.73
 - Порты 80 и 443 открыты в файрволе
+- Права sudo на сервере
+
+## Установка Docker и Docker Compose на Ubuntu
+
+Если Docker еще не установлен, выполните следующие команды:
+
+```bash
+# Обновление списка пакетов
+sudo apt update
+
+# Установка необходимых зависимостей
+sudo apt install -y ca-certificates curl gnupg lsb-release
+
+# Добавление официального GPG ключа Docker
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+# Добавление репозитория Docker
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Установка Docker Engine, Docker CLI и Containerd
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Добавление текущего пользователя в группу docker (чтобы не использовать sudo)
+sudo usermod -aG docker $USER
+
+# Проверка установки
+docker --version
+docker compose version
+
+# Перезайдите в систему или выполните:
+newgrp docker
+```
+
+**Важно:** После добавления пользователя в группу docker нужно перелогиниться или выполнить `newgrp docker` для применения изменений.
 
 ## Подготовка к деплою
+
+### 0. Установка Docker (если еще не установлен)
+
+Если Docker не установлен, выполните:
+
+```bash
+# Автоматическая установка через скрипт
+sudo ./scripts/install-docker.sh
+
+# Или вручную (команды указаны выше в разделе "Установка Docker")
+```
+
+После установки перелогиньтесь или выполните `newgrp docker`.
 
 ### 1. Клонирование репозитория
 
