@@ -16,4 +16,3 @@ export class TimingSafeEqual {
     return timingSafeEqual(actualBuffer, expectedBuffer);
   }
 }
-

@@ -8,7 +8,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
 
-  const swaggerEnabled = config.get<string>('SWAGGER_ENABLED', 'true') === 'true';
+  const swaggerEnabled =
+    config.get<string>('SWAGGER_ENABLED', 'true') === 'true';
 
   app.setGlobalPrefix('api');
   app.enableCors({
@@ -19,7 +20,9 @@ async function bootstrap() {
   if (swaggerEnabled) {
     const swaggerConfig = new DocumentBuilder()
       .setTitle('TspkThee API')
-      .setDescription('Документация REST API для админки и публичных форм участия')
+      .setDescription(
+        'Документация REST API для админки и публичных форм участия',
+      )
       .setVersion('1.0.0')
       .addBasicAuth(
         {

@@ -9,7 +9,9 @@ describe('ParticipationFormatsController', () => {
       controllers: [ParticipationFormatsController],
     }).compile();
 
-    controller = module.get<ParticipationFormatsController>(ParticipationFormatsController);
+    controller = module.get<ParticipationFormatsController>(
+      ParticipationFormatsController,
+    );
   });
 
   it('should be defined', () => {

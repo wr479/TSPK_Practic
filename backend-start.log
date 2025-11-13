@@ -1,0 +1,29 @@
+
+> backend@0.0.1 start:dev
+> nest start --watch
+
+[2J[3J[H[[90m13:59:33[0m] Starting compilation in watch mode...
+
+[[90m13:59:37[0m] Found 0 errors. Watching for file changes.
+
+[Nest] 16392  - 13.11.2025, 13:59:38     LOG [NestFactory] Starting Nest application...
+[Nest] 16392  - 13.11.2025, 13:59:38     LOG [InstanceLoader] TypeOrmModule dependencies initialized +18ms
+[Nest] 16392  - 13.11.2025, 13:59:38     LOG [InstanceLoader] ConfigHostModule dependencies initialized +0ms
+[Nest] 16392  - 13.11.2025, 13:59:38     LOG [InstanceLoader] AppModule dependencies initialized +1ms
+[Nest] 16392  - 13.11.2025, 13:59:38     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
+[Nest] 16392  - 13.11.2025, 13:59:38     LOG [InstanceLoader] ConfigModule dependencies initialized +1ms
+[Nest] 16392  - 13.11.2025, 13:59:38     LOG [InstanceLoader] TelegramModule dependencies initialized +42ms
+[Nest] 16392  - 13.11.2025, 13:59:38     LOG [InstanceLoader] AuthModule dependencies initialized +0ms
+[Nest] 16392  - 13.11.2025, 13:59:41   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (1)...
+Error: getaddrinfo ENOTFOUND db
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[Nest] 16392  - 13.11.2025, 13:59:46   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (2)...
+Error: getaddrinfo ENOTFOUND db
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[Nest] 16392  - 13.11.2025, 13:59:52   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (3)...
+Error: getaddrinfo ENOTFOUND db
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[Nest] 16392  - 13.11.2025, 13:59:57   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (4)...
+Error: getaddrinfo ENOTFOUND db
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+^C^C^C

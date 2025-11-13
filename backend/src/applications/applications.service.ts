@@ -3,10 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCompanyApplicationDto } from './dto/create-company-application.dto';
 import { CreateIndividualApplicationDto } from './dto/create-individual-application.dto';
-import {
-  Application,
-  ApplicationType,
-} from './entities/application.entity';
+import { Application, ApplicationType } from './entities/application.entity';
 import { City } from '../cities/entities/city.entity';
 import { ParticipationFormat } from '../participation-formats/entities/participation-format.entity';
 import { Tariff } from '../tariffs/entities/tariff.entity';

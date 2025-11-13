@@ -28,7 +28,9 @@ export class TelegramService {
     const chatIdsRaw = this.configService.get<string>('TELEGRAM_CHAT_IDS');
 
     if (!botToken || !chatIdsRaw) {
-      this.logger.debug('Telegram уведомления отключены: не заданы токен или chat ids');
+      this.logger.debug(
+        'Telegram уведомления отключены: не заданы токен или chat ids',
+      );
       return;
     }
 
@@ -38,7 +40,9 @@ export class TelegramService {
       .filter(Boolean);
 
     if (!chatIds.length) {
-      this.logger.warn('Telegram уведомления не отправлены: список chat ids пуст');
+      this.logger.warn(
+        'Telegram уведомления не отправлены: список chat ids пуст',
+      );
       return;
     }
 

@@ -9,7 +9,9 @@ describe('ParticipationFormatsService', () => {
       providers: [ParticipationFormatsService],
     }).compile();
 
-    service = module.get<ParticipationFormatsService>(ParticipationFormatsService);
+    service = module.get<ParticipationFormatsService>(
+      ParticipationFormatsService,
+    );
   });
 
   it('should be defined', () => {

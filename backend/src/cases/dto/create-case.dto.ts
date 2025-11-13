@@ -20,4 +20,3 @@ export class CreateCaseDto {
   @IsBoolean()
   isPublished?: boolean;
 }
-

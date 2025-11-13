@@ -32,4 +32,3 @@ export class CaseEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 }
-

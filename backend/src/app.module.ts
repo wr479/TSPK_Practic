@@ -29,7 +29,8 @@ import { TelegramModule } from './telegram/telegram.module';
         database: config.get<string>('DB_NAME', 'tspkthee'),
         autoLoadEntities: true,
         synchronize: config.get<string>('DB_SYNC', 'false') === 'true',
-        migrationsRun: config.get<string>('DB_MIGRATIONS_RUN', 'false') === 'true',
+        migrationsRun:
+          config.get<string>('DB_MIGRATIONS_RUN', 'false') === 'true',
         logging: config.get<string>('DB_LOGGING', 'false') === 'true',
         ssl:
           config.get<string>('DB_SSL', 'false') === 'true'
