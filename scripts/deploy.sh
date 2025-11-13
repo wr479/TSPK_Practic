@@ -10,7 +10,12 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+# Определение команды для docker compose
+if docker compose version &> /dev/null; then
+    DOCKER_COMPOSE="docker compose"
+elif command -v docker-compose &> /dev/null; then
+    DOCKER_COMPOSE="docker-compose"
+else
     echo "❌ Docker Compose не установлен. Установите Docker Compose и повторите попытку."
     exit 1
 fi
@@ -26,14 +31,14 @@ fi
 
 # Остановка старых контейнеров (если есть)
 echo "🛑 Остановка старых контейнеров..."
-docker-compose -f docker-compose.prod.yml down 2>/dev/null || true
+$DOCKER_COMPOSE -f docker-compose.prod.yml down 2>/dev/null || true
 
 # Сборка и запуск контейнеров
 echo "🔨 Сборка образов..."
-docker-compose -f docker-compose.prod.yml build --no-cache
+$DOCKER_COMPOSE -f docker-compose.prod.yml build --no-cache
 
 echo "🚀 Запуск контейнеров..."
-docker-compose -f docker-compose.prod.yml up -d
+$DOCKER_COMPOSE -f docker-compose.prod.yml up -d
 
 # Ожидание готовности сервисов
 echo "⏳ Ожидание готовности сервисов..."
@@ -41,7 +46,7 @@ sleep 10
 
 # Проверка статуса контейнеров
 echo "📊 Статус контейнеров:"
-docker-compose -f docker-compose.prod.yml ps
+$DOCKER_COMPOSE -f docker-compose.prod.yml ps
 
 # Проверка здоровья бекенда
 echo "🏥 Проверка здоровья бекенда..."
@@ -59,7 +64,7 @@ done
 
 if [ $attempt -eq $max_attempts ]; then
     echo "⚠️  Бекенд не отвечает. Проверьте логи:"
-    echo "   docker-compose -f docker-compose.prod.yml logs backend"
+    echo "   $DOCKER_COMPOSE -f docker-compose.prod.yml logs backend"
     exit 1
 fi
 
@@ -67,9 +72,9 @@ echo ""
 echo "✅ Деплой завершен успешно!"
 echo ""
 echo "📋 Полезные команды:"
-echo "   Просмотр логов: docker-compose -f docker-compose.prod.yml logs -f"
-echo "   Остановка: docker-compose -f docker-compose.prod.yml down"
-echo "   Перезапуск: docker-compose -f docker-compose.prod.yml restart"
+echo "   Просмотр логов: $DOCKER_COMPOSE -f docker-compose.prod.yml logs -f"
+echo "   Остановка: $DOCKER_COMPOSE -f docker-compose.prod.yml down"
+echo "   Перезапуск: $DOCKER_COMPOSE -f docker-compose.prod.yml restart"
 echo ""
 echo "🌐 API доступен по адресу: http://82.146.39.73/api"
 echo "📚 Swagger документация: http://82.146.39.73/api/docs"
