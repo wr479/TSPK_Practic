@@ -3,12 +3,13 @@ WORKDIR /app
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
-FROM oven/bun:1.1.30 AS builder
+FROM node:22-alpine AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
 COPY . .
-RUN bun run build
+RUN npm run build
 
 FROM node:22-alpine AS runner
 WORKDIR /app
