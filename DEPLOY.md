@@ -364,6 +364,68 @@ docker stats
 curl http://82.146.39.73/api/health
 ```
 
+## Бэкап и восстановление
+
+### Создание бэкапа
+
+Для сохранения всего Docker окружения (образы, volumes, конфигурация):
+
+```bash
+./scripts/backup-docker.sh
+```
+
+Скрипт создаст папку `backup/backup_YYYYMMDD_HHMMSS` с:
+- Docker образами (backend, frontend, admin, postgres)
+- Данными базы данных (volume)
+- Конфигурационными файлами (docker-compose.prod.yml, nginx, env файлы)
+
+### Восстановление из бэкапа
+
+На новом сервере или после сбоя:
+
+```bash
+./scripts/restore-docker.sh ./backup/backup_YYYYMMDD_HHMMSS
+```
+
+Скрипт автоматически:
+- Загрузит все Docker образы
+- Восстановит данные базы данных
+- Восстановит конфигурационные файлы
+- Запустит все сервисы
+
+### Ручное сохранение (альтернатива)
+
+Если нужно сохранить только образы:
+
+```bash
+# Сохранение образов
+docker save tspk_practic-backend-prod -o backend.tar
+docker save tspk_practic-frontend-prod -o frontend.tar
+docker save tspk_practic-admin-prod -o admin.tar
+
+# Сохранение volume базы данных
+docker run --rm \
+  -v tspk_practic_db_data_prod:/data \
+  -v $(pwd):/backup \
+  alpine tar czf /backup/db_data.tar.gz -C /data .
+```
+
+### Восстановление образов вручную
+
+```bash
+# Загрузка образов
+docker load -i backend.tar
+docker load -i frontend.tar
+docker load -i admin.tar
+
+# Восстановление volume
+docker volume create tspk_practic_db_data_prod
+docker run --rm \
+  -v tspk_practic_db_data_prod:/data \
+  -v $(pwd):/backup \
+  alpine tar xzf /backup/db_data.tar.gz -C /data
+```
+
 ## Дополнительная информация
 
 - API документация доступна по адресу: http://82.146.39.73/api/docs
