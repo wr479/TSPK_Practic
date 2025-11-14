@@ -48,6 +48,7 @@ docker-compose up
 ```
 
 Или откройте в браузере:
-- http://82.146.39.73/ - основной endpoint
-- http://82.146.39.73/api/health - проверка здоровья
+- http://82.146.39.73/front - Frontend
+- http://82.146.39.73/admin - Admin панель
+- http://82.146.39.73/api - API
 - http://82.146.39.73/api/docs - Swagger документация

@@ -11,3 +11,5 @@ README.md
 .vscode
 .idea
 *.md
+temp_*.py
+
