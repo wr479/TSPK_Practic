@@ -20,13 +20,24 @@ else
     exit 1
 fi
 
-# Проверка наличия env.prod файла
+# Проверка наличия env.prod файлов
 if [ ! -f "./backend/env.prod" ]; then
     echo "⚠️  Файл ./backend/env.prod не найден."
     echo "📝 Создайте файл на основе ./backend/env.prod.example"
     echo "   cp ./backend/env.prod.example ./backend/env.prod"
     echo "   Затем отредактируйте ./backend/env.prod и установите необходимые значения"
     exit 1
+fi
+
+# Создание env.prod для frontend и admin если их нет
+if [ ! -f "./frontend/env.prod" ]; then
+    echo "📝 Создание ./frontend/env.prod..."
+    echo "NEXT_PUBLIC_API_URL=http://82.146.39.73/api" > ./frontend/env.prod
+fi
+
+if [ ! -f "./admin/env.prod" ]; then
+    echo "📝 Создание ./admin/env.prod..."
+    echo -e "NEXT_PUBLIC_API_URL=http://82.146.39.73/api\nPORT=3000" > ./admin/env.prod
 fi
 
 # Остановка старых контейнеров (если есть)
@@ -83,6 +94,9 @@ echo "   Просмотр логов: $DOCKER_COMPOSE -f docker-compose.prod.yml
 echo "   Остановка: $DOCKER_COMPOSE -f docker-compose.prod.yml down"
 echo "   Перезапуск: $DOCKER_COMPOSE -f docker-compose.prod.yml restart"
 echo ""
-echo "🌐 API доступен по адресу: http://82.146.39.73/api"
-echo "📚 Swagger документация: http://82.146.39.73/api/docs"
+echo "🌐 Доступные сервисы:"
+echo "   • Frontend: http://82.146.39.73/"
+echo "   • Admin: http://82.146.39.73/admin"
+echo "   • API: http://82.146.39.73/api"
+echo "   • Swagger: http://82.146.39.73/api/docs"
 
