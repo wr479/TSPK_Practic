@@ -16,7 +16,7 @@ import { TelegramModule } from './telegram/telegram.module';
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      envFilePath: ['.env', '.env.local'],
+      envFilePath: ['.env.prod', '.env', '.env.local'],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
